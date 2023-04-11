@@ -4,9 +4,13 @@
     "private": true,
     "homepage": "https://yuriisoroka165.github.io/goit-react-hw-06-phonebook/",
     "dependencies": {
+        "@redux-devtools/extension": "^3.2.5",
+        "@reduxjs/toolkit": "^1.9.3",
         "nanoid": "^4.0.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "react-redux": "^8.0.5",
+        "redux": "^4.2.1",
         "sass": "^1.58.3",
         "web-vitals": "^3.1.1"
     },
