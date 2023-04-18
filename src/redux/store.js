@@ -1,7 +1,9 @@
 // файл стоврення стореджа redux
 import { configureStore } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
 import {
     persistStore,
+    persistReducer,
     FLUSH,
     REHYDRATE,
     PAUSE,
@@ -10,13 +12,20 @@ import {
     REGISTER,
 } from "redux-persist";
 
-import { filterReducer } from "./filterSlice";
-import { persistedContactsReducer } from "./contactsSlice";
+import { contactsSlice } from "./contactsSlice";
+
+const contactsReducer = contactsSlice.reducer;
+
+const persistConfig = {
+    key: "contacts",
+    storage,
+};
+
+const persistedContactsReducer = persistReducer(persistConfig, contactsReducer);
 
 export const store = configureStore({
     reducer: {
         contacts: persistedContactsReducer,
-        filter: filterReducer,
     },
     middleware(getDefaultMiddleware) {
         return getDefaultMiddleware({
