@@ -7,7 +7,7 @@
 
 .filter__field_label {
     font-weight: 700;
-    color: var(--global-black-color)
+    color: var(--global-black-color);
 }
 
 .filter__field_input {

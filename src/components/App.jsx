@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { filterContacts } from "redux/filterSlice";
 import { addContact, deleteContact } from "redux/contactsSlice";
 
-
 import ContactForm from "./ContactForm/ContactForm";
 import Filter from "./Filter/Filter";
 import ContactList from "./ContactList/ContactList";
@@ -11,7 +10,7 @@ import css from "./App.module.css";
 
 export default function App() {
     const dispatch = useDispatch();
-    const contacts = useSelector(state => state.contacts);
+    const contacts = useSelector(state => state.contacts.items);
     const filter = useSelector(state => state.filter);
 
     const deleteContactHandler = contactId => {

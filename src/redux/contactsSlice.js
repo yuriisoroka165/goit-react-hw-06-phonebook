@@ -3,12 +3,14 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 // Початковий стан для тестів
-const initialState = [
-    { id: 0, name: "Yurii Soroka", number: "111-11-11" },
-    { id: 1, name: "Maria Soroka", number: "222-22-22" },
-    { id: 2, name: "Maxim Soroka", number: "333-33-33" },
-    { id: 3, name: "Victoria Soroka", number: "444-44-44" },
-];
+const initialState = {
+    items: [
+        { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
+        { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
+        { id: "id-3", name: "Eden Clements", number: "645-17-79" },
+        { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
+    ],
+};
 
 const contactsSlice = createSlice({
     name: "contacts",
@@ -16,26 +18,24 @@ const contactsSlice = createSlice({
     reducers: {
         addContact: {
             reducer(state, action) {
-                state.push(action.payload);
+                state.items.push(action.payload);
             },
             prepare(contactsData) {
                 return {
-                    payload: {
-                        ...contactsData,
-                    },
+                    payload: { ...contactsData },
                 };
             },
         },
         deleteContact(state, action) {
-            const index = state.findIndex(
+            const index = state.items.findIndex(
                 contact => contact.id === action.payload
             );
-            state.splice(index, 1);
+            state.items.splice(index, 1);
         },
     },
 });
 
-const contactsReducer = contactsSlice.reducer;
+export const contactsReducer = contactsSlice.reducer;
 
 const persistConfig = {
     key: "root",
