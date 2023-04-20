@@ -1,8 +1,14 @@
-import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 
+import { filterContacts } from "redux/contactsSlice";
 import css from "./Filter.module.css";
 
-const Filter = ({ onChange }) => {
+export default function Filter() {
+    const dispatch = useDispatch();
+    const contactFilter = event => {
+        dispatch(filterContacts(event.target.value));
+    };
+
     return (
         <>
             <label
@@ -14,15 +20,9 @@ const Filter = ({ onChange }) => {
                     id="filter-field"
                     className={css.filter__field_input}
                     type="text"
-                    onChange={onChange}
+                    onChange={contactFilter}
                 />
             </label>
         </>
     );
-};
-
-Filter.propTypes = {
-    onChange: PropTypes.func.isRequired,
-};
-
-export default Filter;
+}

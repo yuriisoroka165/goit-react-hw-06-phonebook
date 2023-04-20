@@ -1,16 +1,36 @@
-import PropTypes from "prop-types";
 import { nanoid } from "nanoid";
+import { useDispatch, useSelector } from "react-redux";
 
+import { addContact } from "../../redux/contactsSlice";
 import css from "./ContactForm.module.css";
 
-export default function ContactForm({ onSubmit }) {
+export default function ContactForm() {
+    const dispatch = useDispatch();
+    const contacts = useSelector(state => state.contacts.items);
+    // в даній функції знаки питання після значень перевіряють чи існує таке значення перед викликом toLowerCase()
+    const newContactAudit = newContact => {
+        return contacts.filter(
+            contact =>
+                contact.name?.toLowerCase() === newContact.name?.toLowerCase()
+        );
+    };
+
+    const contactFormSubmitHandler = newContact => {
+        if (newContactAudit(newContact).length > 0) {
+            alert(`${newContact.name} is already in contacts.`);
+            return false;
+        } else {
+            dispatch(addContact(newContact));
+            return true;
+        }
+    };
     const handleSubmit = event => {
         event.preventDefault();
         const form = event.currentTarget;
         const id = nanoid();
         const name = form.elements.name.value;
         const number = form.elements.number.value;
-        if (onSubmit({ id, name, number })) {
+        if (contactFormSubmitHandler({ id, name, number })) {
             form.reset();
         }
     };
@@ -53,7 +73,3 @@ export default function ContactForm({ onSubmit }) {
         </form>
     );
 }
-
-ContactForm.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-};
